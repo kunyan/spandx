@@ -5,7 +5,7 @@ function SPACommentResolver(conf) {
         const isHTML = (res.getHeader("content-type") || "").includes("html");
         if (isHTML) {
             const env = req.headers["x-spandx-env"];
-            const host = conf.routes["/"][env];
+            const host = conf.routes["/"].host[env];
             const chromeParts = await chromeCache.getParts({ host });
             return data
                 .toString()
