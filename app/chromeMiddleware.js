@@ -4,10 +4,8 @@ function SPACommentResolver(conf) {
     return async function SPACommentResolverMiddleware(data, req, res) {
         const isHTML = (res.getHeader("content-type") || "").includes("html");
         if (isHTML) {
-            const origin = req.headers["x-spandx-origin"];
-            const host = `http${conf.bs.https ? "s" : ""}://${origin}:${
-                conf.port
-            }`;
+            const env = req.headers["x-spandx-env"];
+            const host = conf.routes["/"][env];
             const chromeParts = await chromeCache.getParts({ host });
             return data
                 .toString()
